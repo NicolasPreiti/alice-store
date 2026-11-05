@@ -70,7 +70,7 @@ model Client {
 
 model Sale {
   id        String        @id @default(uuid())
-  number    Int           @unique
+  number    Int           @unique @default(autoincrement())
   userId    String
   user      User          @relation(fields: [userId], references: [id])
   clientId  String?
