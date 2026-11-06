@@ -29,7 +29,7 @@ No linter/formatter exists — verification is `tsc` + build + tests.
 ## Prisma 7 gotchas
 
 - Connection URL lives in `backend/prisma.config.ts`, **not** in `schema.prisma` (datasource has only `provider`).
-- Client is generated into `backend/src/generated/prisma` (gitignored). Never edit it by hand; regenerate with `npm run db:generate` (`migrate dev` also does).
+- Client is generated into `backend/generated/prisma` (gitignored) — deliberately **outside** `src/` so relative imports resolve the same in compiled `dist/`. Never edit it by hand; regenerate with `npm run db:generate` (`migrate dev` also does). Generating into `src/` breaks `start:dev` with `Cannot find module '../../generated/prisma/client'`.
 - Runtime uses the `@prisma/adapter-pg` driver adapter (`PrismaPg`) in `src/prisma/prisma.service.ts`; `DATABASE_URL` is read with `ConfigService.getOrThrow` so the app fails at boot if missing.
 - Money is `Decimal @db.Decimal(10,2)` — use `Prisma.Decimal`, never floats.
 - `Sale.number` is filled by the DB sequence `sale_number_seq` (`@default(autoincrement())`) — never set it manually.
@@ -57,4 +57,5 @@ No linter/formatter exists — verification is `tsc` + build + tests.
 
 ## Before committing
 
-- Run `git status` and confirm `backend/.env` and `src/generated/` stay untracked.
+- Run `git status` and confirm `backend/.env` and `backend/generated/` stay untracked.
+- After `npm run build`, smoke-check the compiled module graph (`node -e "require('./dist/main.js')"` or boot `start:dev`) — `tsc` + Vitest only resolve `src/` and miss dist-only breakage like the old `src/generated` path.

@@ -9,7 +9,7 @@ import {
 import type { Response } from 'express';
 import { ZodSerializationException } from 'nestjs-zod';
 import { ZodError } from 'zod';
-import { Prisma } from '../../generated/prisma/client';
+import { Prisma } from '../../../generated/prisma/client';
 
 interface ErrorBody {
   statusCode: number;

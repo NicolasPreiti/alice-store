@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import type { Role } from '../../generated/prisma/client';
+import type { Role } from '../../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import type { CreateLoginDto } from './dto/create-login.dto';
 

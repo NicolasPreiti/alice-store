@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { hash } from 'bcryptjs';
-import { PrismaClient } from '../src/generated/prisma/client';
+import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 const prisma = new PrismaClient({

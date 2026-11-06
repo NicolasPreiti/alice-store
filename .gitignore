@@ -6,4 +6,4 @@ coverage/
 .env.local
 *.local
 .DS_Store
-**/**/src/generated/
+backend/generated/
