@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Users,
   LayoutDashboard,
@@ -8,8 +8,10 @@ import {
   ShoppingCart,
   Wallet,
   Settings,
+  LogOut,
   X,
 } from "lucide-react";
+import { logout } from "@/api/auth";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -31,6 +33,7 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar({ open, onClose, role, userName }: AppSidebarProps) {
+  const navigate = useNavigate();
   const items = NAV_ITEMS.filter(
     (item) => !("adminOnly" in item && item.adminOnly) || role === "ADMIN",
   );
@@ -99,12 +102,23 @@ export function AppSidebar({ open, onClose, role, userName }: AppSidebarProps) {
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-sm font-semibold">
               {(userName ?? "A").slice(0, 1).toUpperCase()}
             </span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{userName ?? "Alice"}</p>
               <p className="truncate text-xs text-sidebar-foreground/70">
                 {role === "ADMIN" ? "Admin" : "Staff"}
               </p>
             </div>
+            <button
+              type="button"
+              onClick={() => {
+                logout();
+                navigate("/login", { replace: true });
+              }}
+              aria-label="Log out"
+              className="rounded-md p-1.5 hover:bg-white/10"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </aside>

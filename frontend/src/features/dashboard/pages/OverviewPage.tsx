@@ -1,9 +1,11 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { useMe } from "@/features/auth/hooks/useMe";
 
 export function OverviewPage() {
+  const { user } = useMe();
   return (
-    <AppShell title="Overview">
+    <AppShell title="Overview" role={user?.role} userName={user?.name}>
       <PageHeader
         title="Overview"
         subtitle="Store at a glance. Real KPIs land with the dashboard slice."

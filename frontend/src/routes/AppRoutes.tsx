@@ -10,7 +10,7 @@ export function AppRoutes() {
       <Route
         path="/"
         element={
-          <ProtectedRoute isAuthenticated={false}>
+          <ProtectedRoute>
             <OverviewPage />
           </ProtectedRoute>
         }
